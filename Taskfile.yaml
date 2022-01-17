@@ -1,0 +1,8 @@
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - echo 'building program for platform {{OS}}'
+      - gcc {{fromSlash "./lista.c"}} -o lista{{exeExt}}
+    silent: true
