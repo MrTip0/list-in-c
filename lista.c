@@ -53,9 +53,9 @@ struct Node *listAdd(struct Node *list, int val) {
     struct Node *p = list;
     // If the list is not empty the pointer goes on until the last one
     // Else allo
-    if (list != NULL)
+    if (list)
     {
-        while (p -> next != NULL)
+        while (p -> next)
         {
             p = p -> next;
         }
@@ -73,10 +73,10 @@ struct Node *listAdd(struct Node *list, int val) {
 
 int listLenght(struct Node *list) {
     int l = 0;
-    if (list != NULL)
+    if (list)
     {
         l++;
-        while (list -> next != NULL)
+        while (list -> next)
         {
             l++;
             list = list -> next;
@@ -87,9 +87,9 @@ int listLenght(struct Node *list) {
 
 int listPosition(struct Node *list, int val) {
     int p = 0;
-    if (list != NULL)
+    if (list)
     {
-        while (list -> next != NULL && list -> val != val)
+        while (list -> next && list -> val != val)
         {
             p++;
             list = list -> next;
@@ -106,16 +106,16 @@ int listPosition(struct Node *list, int val) {
 
 void listRemoveAt(struct Node *list, int val) {
     val--;
-    if (list != NULL)
+    if (list)
     {
-        for (int i = 0; i < val && list != NULL; i++)
+        for (int i = 0; i < val && list; i++)
         {
             list = list -> next;
         }
-        if (list != NULL)
+        if (list)
         {
             struct Node *p = list -> next;
-            if (p != NULL)
+            if (p)
             {
                 list -> next = p -> next;
                 free(p);
