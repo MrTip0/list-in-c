@@ -12,7 +12,7 @@ void listAdd(struct Node **list, int val);
 void listPrint(struct Node *pn);
 int listLenght(struct Node *list);
 int listPosition(struct Node *list, int val);
-void listRemoveAt(struct Node *list, int val);
+void listRemoveAt(struct Node **list, int val);
 
 int main(){
     struct Node *list = NULL;
@@ -44,7 +44,7 @@ int main(){
     int rem;
     printf("Inserisci la posizione da rimuovere: ");
     scanf("%d", &rem);
-    listRemoveAt(list, rem - 1);
+    listRemoveAt(&list, rem - 1);
     printf("Lista con il valore rimosso:\n");
     listPrint(list);
 }
@@ -52,7 +52,7 @@ int main(){
 void listAdd(struct Node **list, int val) {
     struct Node *p = *list;
     // If the list is not empty the pointer goes on until the last one
-    // Else allo
+    // Else alloc
     if (*list)
     {
         while (p -> next)
@@ -103,23 +103,29 @@ int listPosition(struct Node *list, int val) {
     return p;
 }
 
-void listRemoveAt(struct Node *list, int val) {
-    val--;
-    if (list)
+void listRemoveAt(struct Node **list, int val) {
+    struct Node *p = *list;
+    if (p)
     {
-        for (int i = 0; i < val && list; i++)
+        for (int i = 0; i < val && p; i++)
         {
-            list = list -> next;
+            p = p -> next;
         }
-        if (list)
+        if (p)
         {
-            struct Node *p = list -> next;
-            if (p)
+            struct Node *p2 = p -> next;
+            if (p2)
             {
-                list -> next = p -> next;
-                free(p);
+                if (val == 0)
+                {
+                    *list = p -> next;
+                    free(p);
+                } else {
+                    p -> next = p2 -> next;
+                    free(p2);
+                }
             } else {
-                list -> next = p;
+                p -> next = p2;
             }
         }
     }
