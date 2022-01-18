@@ -8,7 +8,7 @@ struct Node
     struct Node *next;
 };
 
-struct Node *listAdd(struct Node *list, int val);
+void listAdd(struct Node **list, int val);
 void listPrint(struct Node *pn);
 int listLenght(struct Node *list);
 int listPosition(struct Node *list, int val);
@@ -24,7 +24,7 @@ int main(){
 
         if (strcmp(input, "stop") != 0)
         {
-            list = listAdd(list, atoi(input));
+            listAdd(&list, atoi(input));
         }
     }
     printf("Lungezza: %d\n", listLenght(list));
@@ -49,11 +49,11 @@ int main(){
     listPrint(list);
 }
 
-struct Node *listAdd(struct Node *list, int val) {
-    struct Node *p = list;
+void listAdd(struct Node **list, int val) {
+    struct Node *p = *list;
     // If the list is not empty the pointer goes on until the last one
     // Else allo
-    if (list)
+    if (*list)
     {
         while (p -> next)
         {
@@ -63,12 +63,11 @@ struct Node *listAdd(struct Node *list, int val) {
         p -> next = malloc(sizeof(struct Node));
         p = p -> next;
     } else {
-        list = malloc(sizeof(struct Node));
-        p = list;
+        *list = malloc(sizeof(struct Node));
+        p = *list;
     }
     p -> val = val;
     p -> next = NULL;
-    return list;
 }
 
 int listLenght(struct Node *list) {
