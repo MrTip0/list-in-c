@@ -107,7 +107,7 @@ void listRemoveAt(struct Node **list, int val) {
     struct Node *p = *list;
     if (p)
     {
-        for (int i = 0; i < val && p; i++)
+        for (int i = 1; i < val && p; i++)
         {
             p = p -> next;
         }
