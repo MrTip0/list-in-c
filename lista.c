@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define findpos 0
+#define removepos 0
+#define removevals 1
+
 struct Node
 {
     int val;
@@ -13,6 +17,7 @@ void listPrint(struct Node *pn);
 int listLenght(struct Node *list);
 int listPosition(struct Node *list, int val);
 void listRemoveAt(struct Node **list, int val);
+int removeAll(struct Node **list, int val);
 
 int main(){
     struct Node *list = NULL;
@@ -28,6 +33,7 @@ int main(){
         }
     }
     printf("Lungezza: %d\n", listLenght(list));
+# if findpos
     int pos;
     printf("Inserisci un numero da cercare nella lista: ");
     scanf("%d", &pos);
@@ -39,13 +45,26 @@ int main(){
     {
         printf("valore non presente nella lista\n");
     }
-    printf("Lista:\n");
-    listPrint(list);
+#endif
+
+#if removepos
     int rem;
     printf("Inserisci la posizione da rimuovere: ");
     scanf("%d", &rem);
     listRemoveAt(&list, rem - 1);
     printf("Lista con il valore rimosso:\n");
+    listPrint(list);
+#endif
+
+#if removevals
+    int val;
+    printf("Inserisci il valore da rimuovere: ");
+    scanf("%d", &val);
+    int rem = removeAll(&list, val);
+    printf("Rimossi: %d\n", rem);
+#endif
+
+    printf("Lista:\n");
     listPrint(list);
 }
 
@@ -137,4 +156,35 @@ void listPrint(struct Node *pn) {
         pn = pn -> next;
     }
     printf("\n");
+}
+
+
+int removeAll(struct Node **list, int val) {
+    int count = 0;
+    if (*list)
+    {
+        struct Node *prec = NULL;
+        struct Node *p = *list;
+
+        while (p)
+        {
+            if ( p -> val == val) {
+                if (prec)
+                {
+                    prec -> next = p -> next;
+                    free(p);
+                    p = prec -> next;
+                } else {
+                    *list = p -> next;
+                    free(p);
+                    p = *list;
+                }
+                count++;
+            } else {
+                prec = p;
+                p = p -> next;
+            }
+        }
+    }
+    return count;
 }
