@@ -4,7 +4,8 @@
 
 #define findpos 0
 #define removepos 0
-#define removevals 1
+#define removevals 0
+#define addsorted 1
 
 struct Node
 {
@@ -13,6 +14,7 @@ struct Node
 };
 
 void listAdd(struct Node **list, int val);
+void listAddSort(struct Node **list, int val);
 void listPrint(struct Node *pn);
 int listLenght(struct Node *list);
 int listPosition(struct Node *list, int val);
@@ -29,7 +31,11 @@ int main(){
 
         if (strcmp(input, "stop") != 0)
         {
+        # if addsorted
+            listAddSort(&list, atoi(input));
+        # else
             listAdd(&list, atoi(input));
+        #endif
         }
     }
     printf("Lungezza: %d\n", listLenght(list));
@@ -87,6 +93,23 @@ void listAdd(struct Node **list, int val) {
     }
     p -> val = val;
     p -> next = NULL;
+}
+
+void listAddSort(struct Node **list, int val) {
+    struct Node *act = *list;
+    struct Node **prev = list;
+
+    while (act && act -> val < val)
+    {
+        prev = &act -> next;
+        act = act -> next;
+    }
+
+    struct Node *newnode = malloc(sizeof(struct Node));
+    newnode -> val = val;
+    newnode -> next = act;
+
+    *prev = newnode;
 }
 
 int listLenght(struct Node *list) {
