@@ -70,7 +70,7 @@ int main(){
     printf("Rimossi: %d\n", rem);
 #endif
 
-    printf("Lista:\n");
+    printf("La lista e':\n");
     listPrint(list);
 }
 
